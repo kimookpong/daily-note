@@ -1,0 +1,205 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── NextAuth v5 required models ───────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(ADMIN)
+  adminId       String?   // For STAFF: points to their ADMIN user
+
+  accounts      Account[]
+  sessions      Session[]
+  records       Record[]  @relation("CreatedBy")
+  assignedRecords Record[] @relation("AssignedTo")
+
+  admin         User?     @relation("AdminStaff", fields: [adminId], references: [id])
+  staff         User[]    @relation("AdminStaff")
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ─── App models ─────────────────────────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  STAFF
+}
+
+enum RecordType {
+  ISSUE
+  ACTIVITY
+  FIELD_WORK
+  COMMUNITY
+  OTHER
+}
+
+enum RecordStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+  CANCELLED
+}
+
+enum Urgency {
+  LOW
+  NORMAL
+  HIGH
+  CRITICAL
+}
+
+enum CommunityEventType {
+  FUNERAL
+  WEDDING
+  RELIGIOUS
+  VISIT
+  OTHER
+}
+
+model Village {
+  id        String   @id @default(cuid())
+  name      String
+  adminId   String
+  records   Record[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("villages")
+}
+
+model Record {
+  id          String       @id @default(cuid())
+  localId     String       @unique // from client IndexedDB
+  title       String
+  description String?      @db.Text
+  type        RecordType
+  status      RecordStatus @default(PENDING)
+  urgency     Urgency      @default(NORMAL)
+  images      String[]     @default([])
+  location    String?
+  tags        String[]     @default([])
+  villageId   String?
+
+  createdById String
+  assignedToId String?
+  updatedById  String?
+
+  deviceUpdatedAt DateTime
+  lastSyncedAt    DateTime?
+
+  village         Village?         @relation(fields: [villageId], references: [id])
+  createdBy       User             @relation("CreatedBy", fields: [createdById], references: [id])
+  assignedTo      User?            @relation("AssignedTo", fields: [assignedToId], references: [id])
+  communityDetail CommunityDetail?
+  expenses        Expense[]
+  updates         RecordUpdate[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("records")
+}
+
+model CommunityDetail {
+  id           String             @id @default(cuid())
+  recordId     String             @unique
+  eventType    CommunityEventType
+  host         String?
+  conversation String?            @db.Text
+  needs        String?            @db.Text
+
+  record       Record             @relation(fields: [recordId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  @@map("community_details")
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  recordId    String
+  description String
+  amount      Decimal  @db.Decimal(12, 2)
+  receiptUrl  String?
+  date        DateTime @db.Date
+
+  record      Record   @relation(fields: [recordId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("expenses")
+}
+
+model RecordUpdate {
+  id         String       @id @default(cuid())
+  recordId   String
+  content    String       @db.Text
+  status     RecordStatus
+  createdById String
+  createdBy  String       // display name snapshot
+
+  record     Record       @relation(fields: [recordId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime     @default(now())
+
+  @@map("record_updates")
+}
