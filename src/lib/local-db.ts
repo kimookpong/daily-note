@@ -71,6 +71,12 @@ class DailyNoteDB extends Dexie {
       records:
         "localId, syncStatus, type, status, urgency, createdById, deviceUpdatedAt, createdAt, *tags",
     })
+
+    // v2 — add serverId index so sync queries can look up records by server id
+    this.version(2).stores({
+      records:
+        "localId, serverId, syncStatus, type, status, urgency, createdById, deviceUpdatedAt, createdAt, *tags",
+    })
   }
 }
 
