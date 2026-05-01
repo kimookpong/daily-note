@@ -41,12 +41,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="th" className={sarabun.variable}>
+    <html lang="th" className={`${sarabun.variable} h-full`}>
       <head>
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className="font-sans antialiased min-h-screen bg-background">
+      <body className="font-sans antialiased h-full overflow-hidden bg-background">
         {children}
       </body>
     </html>
