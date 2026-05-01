@@ -233,14 +233,14 @@ function StatCard({
   value: string
 }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-100 px-3 py-3 flex flex-col gap-2">
-      <div className={`w-8 h-8 rounded-lg ${bg} flex items-center justify-center`}>
-        {icon}
-      </div>
-      <div>
+    <div className="bg-white rounded-xl border border-slate-100 px-3 py-3 flex items-center justify-between gap-2">
+      <div className="flex flex-col gap-2">
+        <div className={`w-8 h-8 rounded-lg ${bg} flex items-center justify-center`}>
+          {icon}
+        </div>
         <p className="text-[11px] text-slate-500 leading-tight">{label}</p>
-        <p className="text-3xl font-black text-slate-900 leading-tight">{value}</p>
       </div>
+      <p className="text-3xl font-black text-slate-900 leading-none">{value}</p>
     </div>
   )
 }
