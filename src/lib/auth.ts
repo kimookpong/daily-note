@@ -1,9 +1,9 @@
 import NextAuth, { type DefaultSession } from "next-auth"
 import type {} from "next-auth/jwt"
-import Google from "next-auth/providers/google"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
+import { authConfig } from "@/lib/auth.config"
 
 declare module "next-auth" {
   interface Session {
@@ -24,9 +24,10 @@ declare module "next-auth/jwt" {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  ...authConfig,
   adapter: PrismaAdapter(prisma),
   providers: [
-    Google({ allowDangerousEmailAccountLinking: true }),
+    ...authConfig.providers.filter((p) => p.id !== "credentials"),
     Credentials({
       credentials: {
         username: { label: "Username", type: "text" },
@@ -40,7 +41,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null
         }
 
-        // Find or create the superadmin user record
         const user = await prisma.user.upsert({
           where: { email: "admin@daily-note.local" },
           update: {},
@@ -62,23 +62,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-  // JWT required for CredentialsProvider; Google OAuth still works fine with JWT
-  session: { strategy: "jwt" },
-  callbacks: {
-    jwt({ token, user }) {
-      if (user) {
-        token.id = user.id ?? token.id
-        token.role = (user as { role?: "ADMIN" | "STAFF" }).role ?? "ADMIN"
-        token.adminId = (user as { adminId?: string | null }).adminId ?? null
-      }
-      return token
-    },
-    session({ session, token }) {
-      session.user.id = token.id
-      session.user.role = token.role
-      session.user.adminId = token.adminId
-      return session
-    },
-  },
-  pages: { signIn: "/login" },
 })
