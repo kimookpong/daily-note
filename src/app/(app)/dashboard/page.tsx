@@ -133,8 +133,8 @@ export default async function DashboardPage() {
       </div>
 
       {/* Monthly expenses */}
-      <div className="bg-white rounded-xl border border-slate-100 p-4 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
+      <div className="bg-white rounded-sm border border-slate-100 p-4 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-sm bg-emerald-50 flex items-center justify-center flex-shrink-0">
           <Banknote className="w-5 h-5 text-emerald-600" />
         </div>
         <div>
@@ -151,7 +151,7 @@ export default async function DashboardPage() {
       {/* Two-column section */}
       <div className="grid md:grid-cols-2 gap-2">
         {/* By type */}
-        <div className="bg-white rounded-xl border border-slate-100 p-4">
+        <div className="bg-white rounded-sm border border-slate-100 p-4">
           <div className="flex items-center gap-2 mb-3">
             <TrendingUp className="w-4 h-4 text-slate-400" />
             <h2 className="font-semibold text-slate-800 text-md">
@@ -176,7 +176,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* By status */}
-        <div className="bg-white rounded-xl border border-slate-100 p-4">
+        <div className="bg-white rounded-sm border border-slate-100 p-4">
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="w-4 h-4 text-slate-400" />
             <h2 className="font-semibold text-slate-800 text-md">
@@ -205,7 +205,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Recent records */}
-      <div className="bg-white rounded-xl border border-slate-100 p-4">
+      <div className="bg-white rounded-sm border border-slate-100 p-4">
         <h2 className="font-semibold text-slate-800 text-md mb-3">
           บันทึกล่าสุด
         </h2>
@@ -217,7 +217,7 @@ export default async function DashboardPage() {
             <a
               key={r.id}
               href={`/records/${r.localId}`}
-              className="flex items-center justify-between gap-3 hover:bg-slate-50 rounded-lg px-2 py-2 -mx-2 transition-colors"
+              className="flex items-center justify-between gap-3 hover:bg-slate-50 rounded-sm px-2 py-2 -mx-2 transition-colors"
             >
               <div className="min-w-0">
                 <p className="text-md font-semibold text-slate-900 truncate">
@@ -263,10 +263,10 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-100 px-3 py-3 flex items-center justify-between gap-2">
+    <div className="bg-white rounded-sm border border-slate-100 px-3 py-3 flex items-center justify-between gap-2">
       <div className="flex flex-col gap-2">
         <div
-          className={`w-8 h-8 rounded-lg ${bg} flex items-center justify-center`}
+          className={`w-8 h-8 rounded-sm ${bg} flex items-center justify-center`}
         >
           {icon}
         </div>

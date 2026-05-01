@@ -39,7 +39,7 @@ export function SyncIndicator() {
 
   if (!isOnline) {
     return (
-      <div className="flex items-center gap-1 px-2 py-1 rounded-xl bg-red-50 text-red-500 text-sm font-medium">
+      <div className="flex items-center gap-1 px-2 py-1 rounded-sm bg-red-50 text-red-500 text-sm font-medium">
         <WifiOff className="w-3.5 h-3.5" />
         <span className="hidden sm:inline">ออฟไลน์</span>
       </div>
@@ -51,7 +51,7 @@ export function SyncIndicator() {
       <button
         onClick={handleSync}
         disabled={isSyncing}
-        className="flex items-center gap-1 px-2 py-1 rounded-xl bg-amber-50 text-amber-600 text-sm font-medium hover:bg-amber-100 transition-colors"
+        className="flex items-center gap-1 px-2 py-1 rounded-sm bg-amber-50 text-amber-600 text-sm font-medium hover:bg-amber-100 transition-colors"
       >
         <RefreshCw className={cn("w-3.5 h-3.5", isSyncing && "animate-spin")} />
         <span>{pendingCount}</span>
@@ -60,7 +60,7 @@ export function SyncIndicator() {
   }
 
   return (
-    <div className="w-7 h-7 rounded-xl bg-green-50 flex items-center justify-center">
+    <div className="w-7 h-7 rounded-sm bg-green-50 flex items-center justify-center">
       <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
     </div>
   );

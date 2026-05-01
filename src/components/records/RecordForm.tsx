@@ -122,7 +122,7 @@ function ButtonSelect<T extends string>({
             type="button"
             onClick={() => onChange(key)}
             className={cn(
-              "px-3 py-1.5 rounded-lg text-md font-medium border transition-all",
+              "px-3 py-1.5 rounded-sm text-md font-medium border transition-all",
               selected
                 ? activeColor
                 : "bg-white text-slate-600 border-slate-200 hover:border-slate-400 hover:text-slate-800",
@@ -332,7 +332,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pb-24 md:pb-6">
       {/* Error banner */}
       {saveError && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-md text-red-700">
+        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-sm px-4 py-3 text-md text-red-700">
           <AlertTriangle className="w-4 h-4 flex-shrink-0" />
           {saveError}
         </div>
@@ -534,7 +534,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
                 <button
                   type="button"
                   onClick={() => removeExpense(index)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-100 text-red-600 text-sm font-medium hover:bg-red-200 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-red-100 text-red-600 text-sm font-medium hover:bg-red-200 transition-colors"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   ลบ

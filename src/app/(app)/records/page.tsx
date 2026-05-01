@@ -30,7 +30,7 @@ function FilterChip({
       type="button"
       onClick={onClick}
       className={cn(
-        "px-3 py-1 rounded-lg text-sm font-medium border transition-all",
+        "px-3 py-1 rounded-sm text-sm font-medium border transition-all",
         active
           ? activeColor
           : "bg-white text-slate-600 border-slate-200 hover:border-slate-400 hover:text-slate-800",
@@ -105,7 +105,7 @@ export default function RecordsPage() {
         </div>
         <Link
           href="/records/new"
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl px-4 py-2.5 text-md transition-colors shadow-sm"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-sm px-4 py-2.5 text-md transition-colors shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">เพิ่มบันทึก</span>
@@ -123,13 +123,13 @@ export default function RecordsPage() {
             onChange={(e) =>
               setFilters((f) => ({ ...f, search: e.target.value }))
             }
-            className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-sm text-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <button
           onClick={() => setShowFilters((v) => !v)}
           className={cn(
-            "flex items-center gap-1.5 px-3 py-2 rounded-xl border text-md font-medium transition-colors",
+            "flex items-center gap-1.5 px-3 py-2 rounded-sm border text-md font-medium transition-colors",
             showFilters || hasActiveFilters
               ? "bg-blue-50 border-blue-300 text-blue-700"
               : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
@@ -147,7 +147,7 @@ export default function RecordsPage() {
 
       {/* Filter panel */}
       {showFilters && (
-        <div className="bg-white border border-slate-100 rounded-xl p-3 space-y-3">
+        <div className="bg-white border border-slate-100 rounded-sm p-3 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-md font-medium text-slate-700">ตัวกรอง</span>
             {hasActiveFilters && (

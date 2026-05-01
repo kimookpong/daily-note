@@ -49,7 +49,7 @@ export function RecordCard({ record }: { record: LocalRecord }) {
     <Link
       href={`/records/${record.localId}`}
       className={cn(
-        "block bg-white rounded-xl shadow-sm border-l-4 pl-4 pr-3 py-3 hover:shadow-md transition-all active:scale-[0.99]",
+        "block bg-white rounded-sm shadow-sm border-l-4 pl-4 pr-3 py-3 hover:shadow-md transition-all active:scale-[0.99]",
         URGENCY_BORDER[record.urgency] ?? "border-l-slate-200",
       )}
     >

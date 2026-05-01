@@ -55,7 +55,7 @@ export function PWAInstallBanner() {
           alt="Daily Note"
           width={40}
           height={40}
-          className="w-10 h-10 rounded-xl flex-shrink-0"
+          className="w-10 h-10 rounded-sm flex-shrink-0"
         />
         <div className="flex-1 min-w-0">
           <p className="text-md font-semibold text-slate-900 leading-tight">
@@ -67,7 +67,7 @@ export function PWAInstallBanner() {
         </div>
         <button
           onClick={handleInstall}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1B3B6F] hover:bg-[#163260] text-white text-sm font-semibold rounded-xl transition-colors flex-shrink-0"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1B3B6F] hover:bg-[#163260] text-white text-sm font-semibold rounded-sm transition-colors flex-shrink-0"
         >
           <Download className="w-3.5 h-3.5" />
           ติดตั้ง
