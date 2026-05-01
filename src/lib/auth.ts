@@ -26,7 +26,7 @@ declare module "next-auth/jwt" {
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
-    Google,
+    Google({ allowDangerousEmailAccountLinking: true }),
     Credentials({
       credentials: {
         username: { label: "Username", type: "text" },
