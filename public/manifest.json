@@ -1,5 +1,5 @@
 {
-  "name": "Daily Note — บันทึกประจำวัน",
+  "name": "Daily Note",
   "short_name": "Daily Note",
   "description": "ระบบบันทึกข้อมูลชุมชนสำหรับสมาชิกสภาเทศบาล",
   "start_url": "/records",
