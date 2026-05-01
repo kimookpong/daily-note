@@ -1,22 +1,27 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation"
-import { useForm, useFieldArray, Controller } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { useState } from "react"
-import { getDB } from "@/lib/local-db"
-import type { LocalRecord, LocalExpense } from "@/lib/local-db"
-import { generateLocalId } from "@/lib/utils"
+import { useRouter } from "next/navigation";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useState } from "react";
+import { getDB } from "@/lib/local-db";
+import type { LocalRecord, LocalExpense } from "@/lib/local-db";
+import { generateLocalId } from "@/lib/utils";
 import {
   RECORD_TYPE_LABELS,
   RECORD_STATUS_LABELS,
   URGENCY_LABELS,
   COMMUNITY_EVENT_TYPE_LABELS,
-} from "@/types"
-import type { RecordType, RecordStatus, Urgency, CommunityEventType } from "@/types"
-import { Loader2, Plus, Trash2, Save, AlertTriangle } from "lucide-react"
-import { cn } from "@/lib/utils"
+} from "@/types";
+import type {
+  RecordType,
+  RecordStatus,
+  Urgency,
+  CommunityEventType,
+} from "@/types";
+import { Loader2, Plus, Trash2, Save, AlertTriangle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // ─── Zod schema ─────────────────────────────────────────────────────────────
 
@@ -26,14 +31,14 @@ const ExpenseSchema = z.object({
   amount: z.coerce.number().min(0, "จำนวนเงินต้องไม่ติดลบ"),
   receiptUrl: z.string().optional(),
   date: z.string().min(1, "กรุณาระบุวันที่"),
-})
+});
 
 const CommunityDetailSchema = z.object({
   eventType: z.enum(["FUNERAL", "WEDDING", "RELIGIOUS", "VISIT", "OTHER"]),
   host: z.string().optional(),
   conversation: z.string().optional(),
   needs: z.string().optional(),
-})
+});
 
 const RecordSchema = z.object({
   title: z.string().min(1, "กรุณาระบุหัวข้อ").max(255),
@@ -46,40 +51,52 @@ const RecordSchema = z.object({
   villageId: z.string().optional(),
   communityDetail: CommunityDetailSchema.optional(),
   expenses: z.array(ExpenseSchema).default([]),
-})
+});
 
-type FormValues = z.infer<typeof RecordSchema>
+type FormValues = z.infer<typeof RecordSchema>;
 
 // ─── Helper components ───────────────────────────────────────────────────────
 
-function Label({ children, required }: { children: React.ReactNode; required?: boolean }) {
+function Label({
+  children,
+  required,
+}: {
+  children: React.ReactNode;
+  required?: boolean;
+}) {
   return (
-    <label className="block text-sm font-medium text-slate-700 mb-1">
+    <label className="block text-md font-medium text-slate-700 mb-1">
       {children}
       {required && <span className="text-red-500 ml-0.5">*</span>}
     </label>
-  )
+  );
 }
 
 function FieldError({ message }: { message?: string }) {
-  if (!message) return null
-  return <p className="text-xs text-red-500 mt-1">{message}</p>
+  if (!message) return null;
+  return <p className="text-sm text-red-500 mt-1">{message}</p>;
 }
 
 function InputClass(hasError?: boolean) {
   return cn(
-    "w-full px-4 py-3 bg-[#F0F5FF] border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F] transition-colors",
-    hasError ? "border-red-400" : "border-slate-200"
-  )
+    "w-full px-4 py-3 bg-[#F0F5FF] border rounded-2xl text-md focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F] transition-colors",
+    hasError ? "border-red-400" : "border-slate-200",
+  );
 }
 
-function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
+function SectionCard({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="bg-white rounded-2xl shadow-sm p-5 space-y-4">
       <h2 className="font-bold text-slate-900 text-base">{title}</h2>
       {children}
     </div>
-  )
+  );
 }
 
 function ButtonSelect<T extends string>({
@@ -88,64 +105,65 @@ function ButtonSelect<T extends string>({
   onChange,
   colorMap,
 }: {
-  options: [T, string][]
-  value: T
-  onChange: (v: T) => void
-  colorMap?: Partial<Record<T, string>>
+  options: [T, string][];
+  value: T;
+  onChange: (v: T) => void;
+  colorMap?: Partial<Record<T, string>>;
 }) {
   return (
     <div className="flex flex-wrap gap-2">
       {options.map(([key, label]) => {
-        const selected = value === key
-        const activeColor = colorMap?.[key] ?? "bg-[#1B3B6F] text-white border-[#1B3B6F]"
+        const selected = value === key;
+        const activeColor =
+          colorMap?.[key] ?? "bg-[#1B3B6F] text-white border-[#1B3B6F]";
         return (
           <button
             key={key}
             type="button"
             onClick={() => onChange(key)}
             className={cn(
-              "px-3 py-1.5 rounded-lg text-sm font-medium border transition-all",
+              "px-3 py-1.5 rounded-lg text-md font-medium border transition-all",
               selected
                 ? activeColor
-                : "bg-white text-slate-600 border-slate-200 hover:border-slate-400 hover:text-slate-800"
+                : "bg-white text-slate-600 border-slate-200 hover:border-slate-400 hover:text-slate-800",
             )}
           >
             {label}
           </button>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 // ─── Main component ──────────────────────────────────────────────────────────
 
 interface RecordFormProps {
-  userId: string
-  existingRecord?: LocalRecord
+  userId: string;
+  existingRecord?: LocalRecord;
 }
 
 export function RecordForm({ userId, existingRecord }: RecordFormProps) {
-  const router = useRouter()
-  const [saving, setSaving] = useState(false)
-  const [deleting, setDeleting] = useState(false)
-  const [saveError, setSaveError] = useState<string | null>(null)
+  const router = useRouter();
+  const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
-  const isEdit = !!existingRecord
+  const isEdit = !!existingRecord;
 
   // Convert tags array → comma string for the form field
-  const defaultTags = existingRecord?.tags.join(", ") ?? ""
+  const defaultTags = existingRecord?.tags.join(", ") ?? "";
 
   // Convert expenses from LocalExpense to form shape
-  const defaultExpenses: FormValues["expenses"] = (existingRecord?.expenses ?? []).map(
-    (e: LocalExpense) => ({
-      id: e.id,
-      description: e.description,
-      amount: e.amount,
-      receiptUrl: e.receiptUrl ?? "",
-      date: e.date,
-    })
-  )
+  const defaultExpenses: FormValues["expenses"] = (
+    existingRecord?.expenses ?? []
+  ).map((e: LocalExpense) => ({
+    id: e.id,
+    description: e.description,
+    amount: e.amount,
+    receiptUrl: e.receiptUrl ?? "",
+    date: e.date,
+  }));
 
   const {
     register,
@@ -172,33 +190,33 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
       },
       expenses: defaultExpenses,
     },
-  })
+  });
 
   const {
     fields: expenseFields,
     append: appendExpense,
     remove: removeExpense,
-  } = useFieldArray({ control, name: "expenses" })
+  } = useFieldArray({ control, name: "expenses" });
 
-  const watchedType = watch("type")
-  const isCommunity = watchedType === "COMMUNITY"
+  const watchedType = watch("type");
+  const isCommunity = watchedType === "COMMUNITY";
 
   // ─── Submit ───────────────────────────────────────────────────────────────
 
   async function onSubmit(values: FormValues) {
-    setSaving(true)
-    setSaveError(null)
+    setSaving(true);
+    setSaveError(null);
 
     try {
-      const db = getDB()
-      const now = Date.now()
+      const db = getDB();
+      const now = Date.now();
 
       const tags = values.tags
         ? values.tags
             .split(",")
             .map((t) => t.trim())
             .filter(Boolean)
-        : []
+        : [];
 
       const expenses: LocalExpense[] = values.expenses.map((e, i) => ({
         id: e.id ?? `exp_${now}_${i}`,
@@ -206,7 +224,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
         amount: e.amount,
         receiptUrl: e.receiptUrl || undefined,
         date: e.date,
-      }))
+      }));
 
       if (isEdit && existingRecord) {
         // Update
@@ -226,8 +244,8 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
           syncStatus: "pending",
           deviceUpdatedAt: now,
           updatedAt: now,
-        }
-        await db.records.put(updated)
+        };
+        await db.records.put(updated);
       } else {
         // Create
         const newRecord: LocalRecord = {
@@ -253,56 +271,58 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
 
           createdAt: now,
           updatedAt: now,
-        }
-        await db.records.add(newRecord)
+        };
+        await db.records.add(newRecord);
       }
 
-      router.push("/records")
+      router.push("/records");
     } catch (err) {
-      console.error("Failed to save record:", err)
-      setSaveError("บันทึกไม่สำเร็จ กรุณาลองใหม่อีกครั้ง")
+      console.error("Failed to save record:", err);
+      setSaveError("บันทึกไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
   }
 
   // ─── Delete ───────────────────────────────────────────────────────────────
 
   async function handleDelete() {
-    if (!existingRecord) return
-    const confirmed = window.confirm("ต้องการลบบันทึกนี้ใช่หรือไม่?")
-    if (!confirmed) return
+    if (!existingRecord) return;
+    const confirmed = window.confirm("ต้องการลบบันทึกนี้ใช่หรือไม่?");
+    if (!confirmed) return;
 
-    setDeleting(true)
+    setDeleting(true);
     try {
-      const db = getDB()
+      const db = getDB();
 
       if (existingRecord.serverId && navigator.onLine) {
         // Try to delete from server
         try {
-          await fetch(`/api/records/${existingRecord.serverId}`, { method: "DELETE" })
+          await fetch(`/api/records/${existingRecord.serverId}`, {
+            method: "DELETE",
+          });
         } catch {
           // Continue even if server delete fails — will be handled by soft-delete sync
         }
         // Remove from IndexedDB
-        await db.records.delete(existingRecord.localId)
+        await db.records.delete(existingRecord.localId);
       } else if (existingRecord.serverId) {
         // Offline: soft-delete — mark for deletion on next sync
         await db.records.update(existingRecord.localId, {
           deleted: true,
           syncStatus: "pending",
           deviceUpdatedAt: Date.now(),
-        })
+        });
       } else {
         // Never synced — just remove
-        await db.records.delete(existingRecord.localId)
+        await db.records.delete(existingRecord.localId);
       }
 
-      router.push("/records")
+      router.push("/records");
     } catch (err) {
-      console.error("Failed to delete record:", err)
+      console.error("Failed to delete record:", err);
     } finally {
-      setDeleting(false)
+      setDeleting(false);
     }
   }
 
@@ -312,7 +332,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pb-24 md:pb-6">
       {/* Error banner */}
       {saveError && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700">
+        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-md text-red-700">
           <AlertTriangle className="w-4 h-4 flex-shrink-0" />
           {saveError}
         </div>
@@ -350,7 +370,9 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
             name="type"
             render={({ field }) => (
               <ButtonSelect
-                options={Object.entries(RECORD_TYPE_LABELS) as [RecordType, string][]}
+                options={
+                  Object.entries(RECORD_TYPE_LABELS) as [RecordType, string][]
+                }
                 value={field.value}
                 onChange={field.onChange}
               />
@@ -367,7 +389,12 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
             name="status"
             render={({ field }) => (
               <ButtonSelect
-                options={Object.entries(RECORD_STATUS_LABELS) as [RecordStatus, string][]}
+                options={
+                  Object.entries(RECORD_STATUS_LABELS) as [
+                    RecordStatus,
+                    string,
+                  ][]
+                }
                 value={field.value}
                 onChange={field.onChange}
                 colorMap={{
@@ -426,7 +453,9 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
             {...register("tags")}
             className={InputClass()}
           />
-          <p className="text-xs text-slate-400 mt-1">คั่นแต่ละแท็กด้วยเครื่องหมายจุลภาค (,)</p>
+          <p className="text-sm text-slate-400 mt-1">
+            คั่นแต่ละแท็กด้วยเครื่องหมายจุลภาค (,)
+          </p>
         </div>
       </SectionCard>
 
@@ -441,7 +470,10 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
               render={({ field }) => (
                 <ButtonSelect
                   options={
-                    Object.entries(COMMUNITY_EVENT_TYPE_LABELS) as [CommunityEventType, string][]
+                    Object.entries(COMMUNITY_EVENT_TYPE_LABELS) as [
+                      CommunityEventType,
+                      string,
+                    ][]
                   }
                   value={field.value ?? "OTHER"}
                   onChange={field.onChange}
@@ -486,7 +518,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
       {/* Expenses */}
       <SectionCard title="ค่าใช้จ่าย">
         {expenseFields.length === 0 && (
-          <p className="text-slate-400 text-sm">ยังไม่มีรายการค่าใช้จ่าย</p>
+          <p className="text-slate-400 text-md">ยังไม่มีรายการค่าใช้จ่าย</p>
         )}
 
         <div className="space-y-4">
@@ -496,13 +528,13 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
               className="bg-[#F0F5FF] rounded-2xl p-4 space-y-3"
             >
               <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-slate-700">
+                <span className="text-md font-semibold text-slate-700">
                   รายการที่ {index + 1}
                 </span>
                 <button
                   type="button"
                   onClick={() => removeExpense(index)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-100 text-red-600 text-xs font-medium hover:bg-red-200 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-100 text-red-600 text-sm font-medium hover:bg-red-200 transition-colors"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   ลบ
@@ -515,9 +547,13 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
                   type="text"
                   placeholder="รายละเอียดค่าใช้จ่าย..."
                   {...register(`expenses.${index}.description`)}
-                  className={InputClass(!!errors.expenses?.[index]?.description)}
+                  className={InputClass(
+                    !!errors.expenses?.[index]?.description,
+                  )}
                 />
-                <FieldError message={errors.expenses?.[index]?.description?.message} />
+                <FieldError
+                  message={errors.expenses?.[index]?.description?.message}
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -532,7 +568,9 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
                     {...register(`expenses.${index}.amount`)}
                     className={InputClass(!!errors.expenses?.[index]?.amount)}
                   />
-                  <FieldError message={errors.expenses?.[index]?.amount?.message} />
+                  <FieldError
+                    message={errors.expenses?.[index]?.amount?.message}
+                  />
                 </div>
 
                 <div>
@@ -542,7 +580,9 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
                     {...register(`expenses.${index}.date`)}
                     className={InputClass(!!errors.expenses?.[index]?.date)}
                   />
-                  <FieldError message={errors.expenses?.[index]?.date?.message} />
+                  <FieldError
+                    message={errors.expenses?.[index]?.date?.message}
+                  />
                 </div>
               </div>
             </div>
@@ -559,7 +599,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
               date: new Date().toISOString().split("T")[0],
             })
           }
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-dashed border-[#1B3B6F]/30 text-[#1B3B6F] text-sm font-semibold hover:bg-[#EEF3FF] transition-colors"
+          className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-dashed border-[#1B3B6F]/30 text-[#1B3B6F] text-md font-semibold hover:bg-[#EEF3FF] transition-colors"
         >
           <Plus className="w-5 h-5" />
           เพิ่มรายการค่าใช้จ่าย
@@ -574,7 +614,11 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
           disabled={saving}
           className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl bg-[#1B3B6F] hover:bg-[#163260] text-white text-base font-bold transition-colors disabled:opacity-50 shadow-lg shadow-[#1B3B6F]/30"
         >
-          {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
+          {saving ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            <Save className="w-5 h-5" />
+          )}
           {isEdit ? "บันทึกการแก้ไข" : "บันทึก"}
         </button>
 
@@ -583,7 +627,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
           <button
             type="button"
             onClick={() => router.back()}
-            className="flex-1 py-3.5 rounded-2xl border-2 border-slate-200 text-slate-600 text-sm font-semibold hover:bg-slate-50 transition-colors"
+            className="flex-1 py-3.5 rounded-2xl border-2 border-slate-200 text-slate-600 text-md font-semibold hover:bg-slate-50 transition-colors"
           >
             ยกเลิก
           </button>
@@ -594,14 +638,18 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
               type="button"
               onClick={handleDelete}
               disabled={deleting}
-              className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-red-50 border-2 border-red-200 text-red-600 text-sm font-semibold hover:bg-red-100 transition-colors disabled:opacity-50"
+              className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-red-50 border-2 border-red-200 text-red-600 text-md font-semibold hover:bg-red-100 transition-colors disabled:opacity-50"
             >
-              {deleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+              {deleting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Trash2 className="w-4 h-4" />
+              )}
               ลบบันทึก
             </button>
           )}
         </div>
       </div>
     </form>
-  )
+  );
 }

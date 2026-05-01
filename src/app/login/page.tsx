@@ -24,7 +24,7 @@ export default async function LoginPage() {
           className="w-24 h-24 sm:w-32 sm:h-32 drop-shadow-xl mb-1"
           priority
         />
-        <p className="text-blue-200 text-sm text-center leading-relaxed">
+        <p className="text-blue-200 text-md text-center leading-relaxed">
           ระบบบันทึกงาน
           <br />
           สมาชิกสภาเทศบาล
@@ -44,7 +44,7 @@ export default async function LoginPage() {
         >
           <button
             type="submit"
-            className="w-full flex items-center justify-center gap-3 py-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm"
+            className="w-full flex items-center justify-center gap-3 py-3.5 bg-white border border-slate-200 rounded-2xl text-md font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm"
           >
             <svg
               className="w-5 h-5 flex-shrink-0"
@@ -74,7 +74,7 @@ export default async function LoginPage() {
 
         <div className="flex items-center gap-3 my-4">
           <div className="flex-1 h-px bg-slate-200" />
-          <span className="text-xs text-slate-400">หรือ</span>
+          <span className="text-sm text-slate-400">หรือ</span>
           <div className="flex-1 h-px bg-slate-200" />
         </div>
 
@@ -96,7 +96,7 @@ export default async function LoginPage() {
             placeholder="Username"
             autoComplete="username"
             required
-            className="w-full px-4 py-3 bg-[#F0F5FF] border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F]"
+            className="w-full px-4 py-3 bg-[#F0F5FF] border border-slate-200 rounded-2xl text-md text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F]"
           />
           <input
             name="password"
@@ -104,11 +104,11 @@ export default async function LoginPage() {
             placeholder="Password"
             autoComplete="current-password"
             required
-            className="w-full px-4 py-3 bg-[#F0F5FF] border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F]"
+            className="w-full px-4 py-3 bg-[#F0F5FF] border border-slate-200 rounded-2xl text-md text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F]"
           />
           <button
             type="submit"
-            className="w-full py-3.5 bg-[#1B3B6F] hover:bg-[#163260] text-white font-semibold rounded-2xl text-sm transition-colors shadow-md shadow-[#1B3B6F]/30"
+            className="w-full py-3.5 bg-[#1B3B6F] hover:bg-[#163260] text-white font-semibold rounded-2xl text-md transition-colors shadow-md shadow-[#1B3B6F]/30"
           >
             เข้าสู่ระบบ
           </button>
