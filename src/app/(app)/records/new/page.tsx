@@ -13,20 +13,20 @@ export default async function NewRecordPage() {
   const userId = session.user.id
 
   return (
-    <div className="space-y-4 max-w-2xl mx-auto">
+    <div className="space-y-3 max-w-2xl mx-auto">
       {/* Back navigation */}
       <Link
         href="/records"
-        className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition-colors"
+        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-700 transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         กลับ
       </Link>
 
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">เพิ่มบันทึกใหม่</h1>
-        <p className="text-slate-500 text-sm mt-1">
-          ข้อมูลจะถูกบันทึกลงในเครื่องก่อน และซิงค์เมื่อมีอินเทอร์เน็ต
+        <h1 className="text-2xl font-black text-slate-900">เพิ่มบันทึกใหม่</h1>
+        <p className="text-slate-400 text-xs mt-0.5">
+          บันทึกลงเครื่องก่อน ซิงค์เมื่อออนไลน์
         </p>
       </div>
 

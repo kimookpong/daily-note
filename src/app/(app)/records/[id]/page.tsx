@@ -17,11 +17,11 @@ export default async function RecordDetailPage({ params }: PageProps) {
   const { id } = await params
 
   return (
-    <div className="space-y-4 max-w-2xl mx-auto">
+    <div className="space-y-3 max-w-2xl mx-auto">
       {/* Back navigation */}
       <Link
         href="/records"
-        className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition-colors"
+        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-700 transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         กลับ

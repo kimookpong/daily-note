@@ -38,14 +38,14 @@ export function RecordCard({ record }: { record: LocalRecord }) {
     <Link
       href={`/records/${record.localId}`}
       className={cn(
-        "block bg-white rounded-2xl shadow-sm border-l-4 pl-4 pr-4 py-4 hover:shadow-md transition-all active:scale-[0.99]",
+        "block bg-white rounded-xl shadow-sm border-l-4 pl-4 pr-3 py-3 hover:shadow-md transition-all active:scale-[0.99]",
         URGENCY_BORDER[record.urgency] ?? "border-l-slate-200"
       )}
     >
-      <div className="flex items-start justify-between gap-2 mb-2">
+      <div className="flex items-start justify-between gap-2 mb-1.5">
         <div className="flex items-center gap-2 min-w-0">
-          <span className={cn("w-2 h-2 rounded-full flex-shrink-0", URGENCY_DOT[record.urgency])} />
-          <h3 className="font-semibold text-slate-900 text-sm leading-snug line-clamp-1">
+          <span className={cn("w-2 h-2 rounded-full flex-shrink-0 mt-0.5", URGENCY_DOT[record.urgency])} />
+          <h3 className="font-semibold text-slate-900 text-base leading-snug line-clamp-1">
             {record.title}
           </h3>
         </div>
@@ -53,14 +53,14 @@ export function RecordCard({ record }: { record: LocalRecord }) {
       </div>
 
       {record.description && (
-        <p className="text-slate-400 text-xs mb-3 line-clamp-2 ml-4">{record.description}</p>
+        <p className="text-slate-400 text-xs mb-2 line-clamp-2 ml-4">{record.description}</p>
       )}
 
       <div className="flex flex-wrap items-center gap-1.5 ml-4">
-        <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-[#EEF3FF] text-[#1B3B6F]">
+        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#EEF3FF] text-[#1B3B6F]">
           {RECORD_TYPE_LABELS[record.type as RecordType] ?? record.type}
         </span>
-        <span className={cn("text-xs font-medium px-2.5 py-0.5 rounded-full", statusColor)}>
+        <span className={cn("text-xs font-medium px-2 py-0.5 rounded-full", statusColor)}>
           {RECORD_STATUS_LABELS[record.status as RecordStatus] ?? record.status}
         </span>
 
@@ -86,7 +86,7 @@ export function RecordCard({ record }: { record: LocalRecord }) {
         </div>
       </div>
 
-      <p className="text-[10px] text-slate-300 mt-2 ml-4">{formatDateTime(record.deviceUpdatedAt)}</p>
+      <p className="text-xs text-slate-300 mt-1.5 ml-4">{formatDateTime(record.deviceUpdatedAt)}</p>
     </Link>
   )
 }

@@ -32,13 +32,13 @@ export function Navbar({ user }: NavbarProps) {
     <>
       {/* ── Top header ────────────────────────────────────── */}
       <header className="sticky top-0 z-40 bg-white border-b border-slate-100 shadow-sm">
-        <div className="container mx-auto max-w-2xl px-4 h-14 flex items-center justify-between gap-3">
+        <div className="container mx-auto max-w-2xl px-3 h-12 flex items-center justify-between gap-3">
           {/* Logo + page name */}
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-[#1B3B6F] flex items-center justify-center flex-shrink-0">
-              <ClipboardList className="w-4 h-4 text-white" />
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-[#1B3B6F] flex items-center justify-center flex-shrink-0">
+              <ClipboardList className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="font-bold text-slate-900 text-sm">
+            <span className="font-bold text-slate-900 text-base">
               {currentPage?.label ?? "Daily Note"}
             </span>
           </div>
@@ -82,26 +82,21 @@ export function Navbar({ user }: NavbarProps) {
               <Link
                 key={href}
                 href={href}
-                className="flex-1 flex flex-col items-center gap-0.5 pt-2 pb-1"
+                className="flex-1 flex flex-col items-center py-2"
               >
                 <div
                   className={cn(
-                    "w-11 h-11 rounded-2xl flex items-center justify-center transition-all",
+                    "flex flex-col items-center gap-0.5 px-5 py-1.5 rounded-2xl transition-all",
                     active
-                      ? "bg-[#1B3B6F] text-white shadow-md shadow-[#1B3B6F]/25"
-                      : "text-slate-400"
+                      ? "bg-[#1B3B6F] shadow-md shadow-[#1B3B6F]/25"
+                      : ""
                   )}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className={cn("w-5 h-5", active ? "text-white" : "text-slate-400")} />
+                  <span className={cn("text-[10px] font-medium leading-none", active ? "text-white" : "text-slate-400")}>
+                    {label}
+                  </span>
                 </div>
-                <span
-                  className={cn(
-                    "text-[10px] font-medium",
-                    active ? "text-[#1B3B6F]" : "text-slate-400"
-                  )}
-                >
-                  {label}
-                </span>
               </Link>
             )
           })}

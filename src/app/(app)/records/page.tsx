@@ -94,12 +94,12 @@ export default function RecordsPage() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">บันทึกทั้งหมด</h1>
-          <p className="text-slate-500 text-sm mt-0.5">
+          <h1 className="text-2xl font-black text-slate-900">บันทึก</h1>
+          <p className="text-slate-400 text-xs mt-0.5">
             {allRecords ? `${allRecords.length} รายการ` : "กำลังโหลด..."}
           </p>
         </div>
@@ -118,16 +118,16 @@ export default function RecordsPage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
           <input
             type="search"
-            placeholder="ค้นหาชื่อ คำอธิบาย หรือแท็ก..."
+            placeholder="ค้นหา..."
             value={filters.search}
             onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
-            className="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <button
           onClick={() => setShowFilters((v) => !v)}
           className={cn(
-            "flex items-center gap-1.5 px-3 py-2.5 rounded-xl border text-sm font-medium transition-colors",
+            "flex items-center gap-1.5 px-3 py-2 rounded-xl border text-sm font-medium transition-colors",
             showFilters || hasActiveFilters
               ? "bg-blue-50 border-blue-300 text-blue-700"
               : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
@@ -145,7 +145,7 @@ export default function RecordsPage() {
 
       {/* Filter panel */}
       {showFilters && (
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 space-y-4">
+        <div className="bg-white border border-slate-100 rounded-xl p-3 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-slate-700">ตัวกรอง</span>
             {hasActiveFilters && (
