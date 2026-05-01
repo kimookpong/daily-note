@@ -1,5 +1,4 @@
 import NextAuth, { type DefaultSession } from "next-auth"
-import type { JWT } from "next-auth/jwt"
 import Google from "next-auth/providers/google"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"

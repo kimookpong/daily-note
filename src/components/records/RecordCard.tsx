@@ -4,10 +4,9 @@ import type { LocalRecord } from "@/lib/local-db"
 import {
   RECORD_TYPE_LABELS,
   RECORD_STATUS_LABELS,
-  URGENCY_LABELS,
   RECORD_STATUS_COLORS,
 } from "@/types"
-import type { RecordType, RecordStatus, Urgency } from "@/types"
+import type { RecordType, RecordStatus } from "@/types"
 import { formatDateTime } from "@/lib/utils"
 import { cn } from "@/lib/utils"
 
