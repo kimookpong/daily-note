@@ -34,7 +34,7 @@ export function RecordDetailClient({
   if (!record || record.deleted) {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
-        <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center">
+        <div className="w-16 h-16  bg-slate-100 flex items-center justify-center">
           <FileX className="w-8 h-8 text-slate-400" />
         </div>
         <div>
@@ -55,11 +55,10 @@ export function RecordDetailClient({
 
   return (
     <div className="space-y-4">
-      <div>
+      <div className="px-2">
         <h1 className="text-xl font-bold text-slate-900 line-clamp-2">
           {record.title}
         </h1>
-        <p className="text-slate-500 text-md mt-1">แก้ไขบันทึก</p>
       </div>
 
       <RecordForm userId={userId} existingRecord={record} />

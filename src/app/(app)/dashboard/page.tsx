@@ -93,9 +93,9 @@ export default async function DashboardPage() {
   const monthlyExpenses = Number(expenseAgg._sum.amount ?? 0);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {/* Header */}
-      <div className="flex items-baseline justify-between">
+      <div className="flex items-baseline justify-between p-2">
         <h1 className="text-xl font-black text-slate-900">แดชบอร์ด</h1>
         <p className="text-slate-400 text-sm">{formatDate(now)}</p>
       </div>
@@ -133,8 +133,8 @@ export default async function DashboardPage() {
       </div>
 
       {/* Monthly expenses */}
-      <div className="bg-white rounded-sm border border-slate-100 p-4 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-sm bg-emerald-50 flex items-center justify-center flex-shrink-0">
+      <div className="bg-white  border border-slate-100 p-2 flex items-center gap-3">
+        <div className="w-10 h-10  bg-emerald-50 flex items-center justify-center flex-shrink-0">
           <Banknote className="w-5 h-5 text-emerald-600" />
         </div>
         <div>
@@ -151,7 +151,7 @@ export default async function DashboardPage() {
       {/* Two-column section */}
       <div className="grid md:grid-cols-2 gap-2">
         {/* By type */}
-        <div className="bg-white rounded-sm border border-slate-100 p-4">
+        <div className="bg-white  border border-slate-100 p-2">
           <div className="flex items-center gap-2 mb-3">
             <TrendingUp className="w-4 h-4 text-slate-400" />
             <h2 className="font-semibold text-slate-800 text-md">
@@ -176,7 +176,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* By status */}
-        <div className="bg-white rounded-sm border border-slate-100 p-4">
+        <div className="bg-white  border border-slate-100 p-2">
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="w-4 h-4 text-slate-400" />
             <h2 className="font-semibold text-slate-800 text-md">
@@ -205,7 +205,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Recent records */}
-      <div className="bg-white rounded-sm border border-slate-100 p-4">
+      <div className="bg-white  border border-slate-100 p-2">
         <h2 className="font-semibold text-slate-800 text-md mb-3">
           บันทึกล่าสุด
         </h2>
@@ -217,7 +217,7 @@ export default async function DashboardPage() {
             <a
               key={r.id}
               href={`/records/${r.localId}`}
-              className="flex items-center justify-between gap-3 hover:bg-slate-50 rounded-sm px-2 py-2 -mx-2 transition-colors"
+              className="flex items-center justify-between gap-3 hover:bg-slate-50  px-2 py-2 -mx-2 transition-colors"
             >
               <div className="min-w-0">
                 <p className="text-md font-semibold text-slate-900 truncate">
@@ -229,7 +229,7 @@ export default async function DashboardPage() {
                 </p>
               </div>
               <span
-                className={`flex-shrink-0 text-sm font-medium px-2 py-0.5 rounded-full ${
+                className={`flex-shrink-0 text-sm font-medium px-2 py-0.5  ${
                   r.status === "PENDING"
                     ? "bg-yellow-100 text-yellow-800"
                     : r.status === "IN_PROGRESS"
@@ -263,11 +263,9 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="bg-white rounded-sm border border-slate-100 px-3 py-3 flex items-center justify-between gap-2">
+    <div className="bg-white  border border-slate-100 px-3 py-3 flex items-center justify-between gap-2">
       <div className="flex flex-col gap-2">
-        <div
-          className={`w-8 h-8 rounded-sm ${bg} flex items-center justify-center`}
-        >
+        <div className={`w-8 h-8  ${bg} flex items-center justify-center`}>
           {icon}
         </div>
         <p className="text-[11px] text-slate-500 leading-tight">{label}</p>

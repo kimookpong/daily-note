@@ -13,8 +13,8 @@ export default async function NewRecordPage() {
   const userId = session.user.id;
 
   return (
-    <div className="space-y-3 max-w-2xl mx-auto">
-      <div>
+    <div className="space-y-2 max-w-2xl mx-auto">
+      <div className="p-2">
         <div className="flex items-center gap-2">
           <Link
             href="/records"

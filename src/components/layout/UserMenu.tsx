@@ -49,7 +49,7 @@ export function UserMenu({ user }: UserMenuProps) {
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 rounded-sm px-1.5 py-1.5 transition-colors"
+        className="flex items-center gap-1.5  px-1.5 py-1.5 transition-colors"
       >
         {user.image ? (
           <Image
@@ -57,10 +57,10 @@ export function UserMenu({ user }: UserMenuProps) {
             alt={user.name ?? "User"}
             width={36}
             height={36}
-            className="rounded-full ring-1 ring-slate-200"
+            className=" ring-1 ring-slate-200"
           />
         ) : (
-          <div className="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center">
+          <div className="w-9 h-9  bg-slate-200 flex items-center justify-center">
             <User className="w-5 h-5 text-slate-400" />
           </div>
         )}
@@ -72,7 +72,7 @@ export function UserMenu({ user }: UserMenuProps) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-56 bg-slate-800 border border-slate-700 rounded-sm shadow-xl overflow-hidden z-50">
+        <div className="absolute right-0 top-full mt-2 w-56 bg-slate-800 border border-slate-700  shadow-xl overflow-hidden z-50">
           {/* User info */}
           <div className="px-4 py-3 border-b border-slate-700">
             <p className="text-md font-medium text-white truncate">

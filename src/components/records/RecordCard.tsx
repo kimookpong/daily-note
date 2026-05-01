@@ -49,7 +49,7 @@ export function RecordCard({ record }: { record: LocalRecord }) {
     <Link
       href={`/records/${record.localId}`}
       className={cn(
-        "block bg-white rounded-sm shadow-sm border-l-4 pl-4 pr-3 py-3 hover:shadow-md transition-all active:scale-[0.99]",
+        "block bg-white  shadow-sm border-l-4 pl-4 pr-3 py-3 hover:shadow-md transition-all active:scale-[0.99]",
         URGENCY_BORDER[record.urgency] ?? "border-l-slate-200",
       )}
     >
@@ -57,7 +57,7 @@ export function RecordCard({ record }: { record: LocalRecord }) {
         <div className="flex items-center gap-2 min-w-0">
           <span
             className={cn(
-              "w-2 h-2 rounded-full flex-shrink-0 mt-0.5",
+              "w-2 h-2  flex-shrink-0 mt-0.5",
               URGENCY_DOT[record.urgency],
             )}
           />
@@ -75,15 +75,10 @@ export function RecordCard({ record }: { record: LocalRecord }) {
       )}
 
       <div className="flex flex-wrap items-center gap-1.5 ml-4">
-        <span className="text-sm font-medium px-2 py-0.5 rounded-full bg-[#EEF3FF] text-[#1B3B6F]">
+        <span className="text-sm font-medium px-2 py-0.5  bg-[#EEF3FF] text-[#1B3B6F]">
           {RECORD_TYPE_LABELS[record.type as RecordType] ?? record.type}
         </span>
-        <span
-          className={cn(
-            "text-sm font-medium px-2 py-0.5 rounded-full",
-            statusColor,
-          )}
-        >
+        <span className={cn("text-sm font-medium px-2 py-0.5 ", statusColor)}>
           {RECORD_STATUS_LABELS[record.status as RecordStatus] ?? record.status}
         </span>
 

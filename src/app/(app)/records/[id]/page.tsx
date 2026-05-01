@@ -17,8 +17,8 @@ export default async function RecordDetailPage({ params }: PageProps) {
   const { id } = await params;
 
   return (
-    <div className="space-y-3 max-w-2xl mx-auto">
-      <div className="flex items-center gap-2">
+    <div className="space-y-2 max-w-2xl mx-auto">
+      <div className="flex items-center gap-2 p-2">
         <Link
           href="/records"
           className="text-slate-400 hover:text-slate-700 transition-colors flex-shrink-0"

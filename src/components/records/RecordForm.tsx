@@ -79,7 +79,7 @@ function FieldError({ message }: { message?: string }) {
 
 function InputClass(hasError?: boolean) {
   return cn(
-    "w-full px-4 py-3 bg-[#F0F5FF] border rounded-2xl text-md focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F] transition-colors",
+    "w-full px-4 py-3 bg-[#F0F5FF] border  text-md focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F] transition-colors",
     hasError ? "border-red-400" : "border-slate-200",
   );
 }
@@ -92,7 +92,7 @@ function SectionCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-5 space-y-4">
+    <div className="bg-white  shadow-sm p-2 space-y-4">
       <h2 className="font-bold text-slate-900 text-base">{title}</h2>
       {children}
     </div>
@@ -122,7 +122,7 @@ function ButtonSelect<T extends string>({
             type="button"
             onClick={() => onChange(key)}
             className={cn(
-              "px-3 py-1.5 rounded-sm text-md font-medium border transition-all",
+              "px-3 py-1.5  text-md font-medium border transition-all",
               selected
                 ? activeColor
                 : "bg-white text-slate-600 border-slate-200 hover:border-slate-400 hover:text-slate-800",
@@ -332,7 +332,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pb-24 md:pb-6">
       {/* Error banner */}
       {saveError && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-sm px-4 py-3 text-md text-red-700">
+        <div className="flex items-center gap-2 bg-red-50 border border-red-200  px-4 py-3 text-md text-red-700">
           <AlertTriangle className="w-4 h-4 flex-shrink-0" />
           {saveError}
         </div>
@@ -523,10 +523,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
 
         <div className="space-y-4">
           {expenseFields.map((field, index) => (
-            <div
-              key={field.id}
-              className="bg-[#F0F5FF] rounded-2xl p-4 space-y-3"
-            >
+            <div key={field.id} className="bg-[#F0F5FF]  p-2 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-md font-semibold text-slate-700">
                   รายการที่ {index + 1}
@@ -534,7 +531,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
                 <button
                   type="button"
                   onClick={() => removeExpense(index)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-red-100 text-red-600 text-sm font-medium hover:bg-red-200 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5  bg-red-100 text-red-600 text-sm font-medium hover:bg-red-200 transition-colors"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   ลบ
@@ -599,7 +596,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
               date: new Date().toISOString().split("T")[0],
             })
           }
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-dashed border-[#1B3B6F]/30 text-[#1B3B6F] text-md font-semibold hover:bg-[#EEF3FF] transition-colors"
+          className="w-full flex items-center justify-center gap-2 py-3  border-2 border-dashed border-[#1B3B6F]/30 text-[#1B3B6F] text-md font-semibold hover:bg-[#EEF3FF] transition-colors"
         >
           <Plus className="w-5 h-5" />
           เพิ่มรายการค่าใช้จ่าย
@@ -607,12 +604,12 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
       </SectionCard>
 
       {/* Actions */}
-      <div className="space-y-3 pt-2">
+      <div className="space-y-2 pt-2">
         {/* Save */}
         <button
           type="submit"
           disabled={saving}
-          className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl bg-[#1B3B6F] hover:bg-[#163260] text-white text-base font-bold transition-colors disabled:opacity-50 shadow-lg shadow-[#1B3B6F]/30"
+          className="w-full flex items-center justify-center gap-2 py-4  bg-[#1B3B6F] hover:bg-[#163260] text-white text-base font-bold transition-colors disabled:opacity-50 shadow-lg shadow-[#1B3B6F]/30"
         >
           {saving ? (
             <Loader2 className="w-5 h-5 animate-spin" />
@@ -627,7 +624,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
           <button
             type="button"
             onClick={() => router.back()}
-            className="flex-1 py-3.5 rounded-2xl border-2 border-slate-200 text-slate-600 text-md font-semibold hover:bg-slate-50 transition-colors"
+            className="flex-1 py-3.5  border-2 border-slate-200 text-slate-600 text-md font-semibold hover:bg-slate-50 transition-colors"
           >
             ยกเลิก
           </button>
@@ -638,7 +635,7 @@ export function RecordForm({ userId, existingRecord }: RecordFormProps) {
               type="button"
               onClick={handleDelete}
               disabled={deleting}
-              className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-red-50 border-2 border-red-200 text-red-600 text-md font-semibold hover:bg-red-100 transition-colors disabled:opacity-50"
+              className="flex-1 flex items-center justify-center gap-2 py-3.5  bg-red-50 border-2 border-red-200 text-red-600 text-md font-semibold hover:bg-red-100 transition-colors disabled:opacity-50"
             >
               {deleting ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

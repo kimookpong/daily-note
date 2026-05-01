@@ -45,7 +45,7 @@ export function Navbar({ user }: NavbarProps) {
               alt="Daily Note"
               width={28}
               height={28}
-              className="w-12 h-12 rounded-sm flex-shrink-0"
+              className="w-12 h-12  flex-shrink-0"
             />
             <span className="font-bold text-slate-900 text-base">
               {currentPage?.label ?? "Daily Note"}
@@ -61,7 +61,7 @@ export function Navbar({ user }: NavbarProps) {
                   key={href}
                   href={href}
                   className={cn(
-                    "flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-md font-medium transition-all",
+                    "flex items-center gap-1.5 px-3 py-1.5  text-md font-medium transition-all",
                     active
                       ? "bg-[#1B3B6F] text-white shadow-sm"
                       : "text-slate-500 hover:bg-slate-100 hover:text-slate-900",

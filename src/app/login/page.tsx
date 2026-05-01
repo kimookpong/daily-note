@@ -11,8 +11,8 @@ export default async function LoginPage() {
   return (
     <main className="h-dvh flex flex-col overflow-y-auto bg-gradient-to-b from-[#1B3B6F] via-[#16336A] to-[#0D2350]">
       {/* Decorative circles */}
-      <div className="absolute top-16 right-8 w-32 h-32 rounded-full bg-white/5 -z-0 pointer-events-none" />
-      <div className="absolute bottom-1/3 left-4 w-48 h-48 rounded-full bg-white/5 -z-0 pointer-events-none" />
+      <div className="absolute top-16 right-8 w-32 h-32  bg-white/5 -z-0 pointer-events-none" />
+      <div className="absolute bottom-1/3 left-4 w-48 h-48  bg-white/5 -z-0 pointer-events-none" />
 
       {/* Splash hero — compact on mobile so the card stays visible */}
       <div className="flex-1 flex flex-col items-center justify-center px-8 py-8 sm:py-16">
@@ -44,7 +44,7 @@ export default async function LoginPage() {
         >
           <button
             type="submit"
-            className="w-full flex items-center justify-center gap-3 py-3.5 bg-white border border-slate-200 rounded-2xl text-md font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm"
+            className="w-full flex items-center justify-center gap-3 py-3.5 bg-white border border-slate-200  text-md font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm"
           >
             <svg
               className="w-5 h-5 flex-shrink-0"
@@ -88,7 +88,7 @@ export default async function LoginPage() {
               redirectTo: "/dashboard",
             });
           }}
-          className="space-y-3"
+          className="space-y-2"
         >
           <input
             name="username"
@@ -96,7 +96,7 @@ export default async function LoginPage() {
             placeholder="Username"
             autoComplete="username"
             required
-            className="w-full px-4 py-3 bg-[#F0F5FF] border border-slate-200 rounded-2xl text-md text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F]"
+            className="w-full px-4 py-3 bg-[#F0F5FF] border border-slate-200  text-md text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F]"
           />
           <input
             name="password"
@@ -104,11 +104,11 @@ export default async function LoginPage() {
             placeholder="Password"
             autoComplete="current-password"
             required
-            className="w-full px-4 py-3 bg-[#F0F5FF] border border-slate-200 rounded-2xl text-md text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F]"
+            className="w-full px-4 py-3 bg-[#F0F5FF] border border-slate-200  text-md text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1B3B6F]/30 focus:border-[#1B3B6F]"
           />
           <button
             type="submit"
-            className="w-full py-3.5 bg-[#1B3B6F] hover:bg-[#163260] text-white font-semibold rounded-2xl text-md transition-colors shadow-md shadow-[#1B3B6F]/30"
+            className="w-full py-3.5 bg-[#1B3B6F] hover:bg-[#163260] text-white font-semibold  text-md transition-colors shadow-md shadow-[#1B3B6F]/30"
           >
             เข้าสู่ระบบ
           </button>

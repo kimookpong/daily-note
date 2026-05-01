@@ -30,7 +30,7 @@ function FilterChip({
       type="button"
       onClick={onClick}
       className={cn(
-        "px-3 py-1 rounded-sm text-sm font-medium border transition-all",
+        "px-3 py-1  text-sm font-medium border transition-all",
         active
           ? activeColor
           : "bg-white text-slate-600 border-slate-200 hover:border-slate-400 hover:text-slate-800",
@@ -94,9 +94,9 @@ export default function RecordsPage() {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between p-2">
         <div>
           <h1 className="text-xl font-black text-slate-900">บันทึก</h1>
           <p className="text-slate-400 text-sm mt-0.5">
@@ -105,7 +105,7 @@ export default function RecordsPage() {
         </div>
         <Link
           href="/records/new"
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-sm px-4 py-2.5 text-md transition-colors shadow-sm"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium  px-4 py-2.5 text-md transition-colors shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">เพิ่มบันทึก</span>
@@ -123,13 +123,13 @@ export default function RecordsPage() {
             onChange={(e) =>
               setFilters((f) => ({ ...f, search: e.target.value }))
             }
-            className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-sm text-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200  text-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <button
           onClick={() => setShowFilters((v) => !v)}
           className={cn(
-            "flex items-center gap-1.5 px-3 py-2 rounded-sm border text-md font-medium transition-colors",
+            "flex items-center gap-1.5 px-3 py-2  border text-md font-medium transition-colors",
             showFilters || hasActiveFilters
               ? "bg-blue-50 border-blue-300 text-blue-700"
               : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50",
@@ -138,7 +138,7 @@ export default function RecordsPage() {
           <SlidersHorizontal className="w-4 h-4" />
           <span className="hidden sm:inline">กรอง</span>
           {hasActiveFilters && (
-            <span className="ml-0.5 w-4 h-4 rounded-full bg-blue-600 text-white text-sm flex items-center justify-center">
+            <span className="ml-0.5 w-4 h-4  bg-blue-600 text-white text-sm flex items-center justify-center">
               !
             </span>
           )}
@@ -147,7 +147,7 @@ export default function RecordsPage() {
 
       {/* Filter panel */}
       {showFilters && (
-        <div className="bg-white border border-slate-100 rounded-sm p-3 space-y-3">
+        <div className="bg-white border border-slate-100  p-2 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-md font-medium text-slate-700">ตัวกรอง</span>
             {hasActiveFilters && (
@@ -161,7 +161,7 @@ export default function RecordsPage() {
             )}
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
             {/* Type filter */}
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">
@@ -261,11 +261,11 @@ export default function RecordsPage() {
       {/* Records list */}
       {allRecords === undefined ? (
         // Loading state
-        <div className="space-y-3">
+        <div className="space-y-2">
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="bg-white rounded-2xl border border-slate-200 p-4 animate-pulse"
+              className="bg-white  border border-slate-200 p-2 animate-pulse"
             >
               <div className="h-4 bg-slate-200 rounded w-3/4 mb-2" />
               <div className="h-3 bg-slate-100 rounded w-1/2" />
@@ -274,7 +274,7 @@ export default function RecordsPage() {
         </div>
       ) : filteredRecords.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
+          <div className="w-16 h-16  bg-slate-100 flex items-center justify-center mb-4">
             <Search className="w-8 h-8 text-slate-400" />
           </div>
           <p className="text-slate-600 font-medium">ไม่พบรายการ</p>
@@ -293,7 +293,7 @@ export default function RecordsPage() {
           )}
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2">
           {filteredRecords.map((record) => (
             <RecordCard key={record.localId} record={record} />
           ))}
